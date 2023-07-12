@@ -6,15 +6,22 @@ import { myDataSource } from '../data-source';
 
 const router = express.Router();
 
+router.get('/', async function(req:Request, res:Response){
+  const todos = await myDataSource.getRepository(Todo).find()
+  res.json(todos);
+})
+
 router.get('/:boardId', async function(req:Request, res:Response){
       const board = await myDataSource.getRepository(Board).findOneBy({
         id: Number(req.params.boardId)})
-      const todos = await myDataSource.getRepository(Todo).find({
-        where : {board: board},
-        relations : ['board'],
-      }) 
-      
+        if (!board) {
+          res.status(400).json({message:'No board with the id'})
+        } else {
+        const todos = await myDataSource.getRepository(Todo).findBy({
+        boardId: Number(req.params.boardId),
+        }) 
       res.json(todos);
+      } 
 })
 
 router.post('/', async function(req:Request, res:Response){
@@ -41,8 +48,9 @@ router.put('/:id', async function(req: Request, res: Response) {
         return res.status(404).json({ message: 'Todo not found' });
       }
 
+      const body = req.body? req.body : {'isCompleted':!todo.isCompleted}
       // Update the todo object based on the request body
-      todoRepository.merge(todo,req.body)
+      todoRepository.merge(todo, body)
       // Save the updated todo object
       await todoRepository.save(todo);
 

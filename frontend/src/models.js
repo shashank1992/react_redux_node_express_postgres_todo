@@ -6,7 +6,11 @@ export class BoardModel extends Model {
         const {payload, type} = action;
         switch(type) {
             case CREATE_BOARD:
+                if (Array.isArray(payload)) {
+                    payload.forEach((board) => BoardModel.create(board));
+                } else {
                 BoardModel.create(payload);
+                }
                 break;
             case DELETE_BOARD:
                 BoardModel.withId(payload).todo.delete();
@@ -23,7 +27,12 @@ export class TodoModel extends Model {
         switch(type) {
             case CREATE_TODO:
                 console.log('dispatched create_todo')
+                console.log(payload);
+                if (Array.isArray(payload)) {
+                    payload.forEach((todo) => TodoModel.create(todo));
+                } else {
                 TodoModel.create(payload);
+                }
                 break;
             case TOGGLE_TODO:
                 const completeState = TodoModel.withId(payload).isCompleted

@@ -1,0 +1,16 @@
+export const CREATE_TODO = 'CREATE_TODO';
+export const TOGGLE_TODO = 'TOGGLE_TODO';
+export const DELETE_TODO = 'DELETE_TODO';
+export const CREATE_BOARD = 'CREATE_BOARD';
+export const DELETE_BOARD = 'DELETE_BOARD';
+export const SELECT_BOARD = 'SELECT_BOARD'; 
+
+// SAGAS
+export const CREATE_TODO_SAGA = 'CREATE_TODO_SAGA';
+export const TOGGLE_TODO_SAGA = 'TOGGLE_TODO_SAGA';
+export const DELETE_TODO_SAGA = 'DELETE_TODO_SAGA';
+export const CREATE_BOARD_SAGA = 'CREATE_BOARD_SAGA';
+export const DELETE_BOARD_SAGA = 'DELETE_BOARD_SAGA';
+export const SELECT_BOARD_SAGA = 'SELECT_BOARD_SAGA'; 
+export const GET_BOARD_SAGA = 'GET_BOARD_SAGA';
+export const GET_TODO_SAGA = 'GET_TODO_SAGA';
