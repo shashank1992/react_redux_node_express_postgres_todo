@@ -1,6 +1,6 @@
 
-**#To start the app in local**
-docker-compose up --build
+# To start the app in local
+"docker-compose up --build"
 
 
 # Getting Started with Create React App
