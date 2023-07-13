@@ -2,11 +2,18 @@ import TodoList from "./TodoList";
 import BoardList from './BoardList';
 import {Grid, Container} from 'semantic-ui-react';
 import { connect} from 'react-redux';
-import { selectBoard, createBoard, deleteBoard, createTodo, deleteTodo, toggleTodo } from "./actions";
-import {todos, boards, currentBoard} from './selectors';
+import { getBoardSaga, getTodoSaga } from "./actions";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
-export function TodoApp({todos, boards, currentBoard, selectBoard, createBoard,
-deleteBoard, createTodo, deleteTodo, toggleTodo}) {
+export default function TodoApp({}) {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getBoardSaga());
+        dispatch(getTodoSaga());
+    }, [dispatch])
+
     return (
         <Container>
         <Grid centered>
@@ -29,22 +36,3 @@ deleteBoard, createTodo, deleteTodo, toggleTodo}) {
         </Container>
     )
 }
-
-function stateToProps(state){
-    return {
-        todos: todos(state),
-        selectedBoard : currentBoard(state),
-        boards: boards(state),
-    }
-}
-
-const dispatchToProps = {
-    selectBoard,
-    createBoard,
-    deleteBoard,
-    createTodo,
-    deleteTodo,
-    toggleTodo
-}
-
-export default connect(stateToProps, dispatchToProps)(TodoApp)

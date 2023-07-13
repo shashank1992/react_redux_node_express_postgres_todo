@@ -16,6 +16,5 @@ export class Todo {
   boardId: number;
 
   @ManyToOne(type=>Board, board => board.todos)
-  @JoinColumn({name: 'board_id'})
   board: Board;
 }

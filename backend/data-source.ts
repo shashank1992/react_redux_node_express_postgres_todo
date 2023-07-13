@@ -2,7 +2,7 @@ import { DataSource } from 'typeorm';
 
 export const myDataSource = new DataSource({
     type: "postgres",
-    host : 'localhost',
+    host : 'db',
     port: 5432,
     username: "postgres",
     password: "todo_postgres_pass",
@@ -10,5 +10,5 @@ export const myDataSource = new DataSource({
     entities:["dist/entities/*.js"],
     migrations:["dist/migrations/*.js"],
     logging: true,
-    synchronize: false
+    synchronize: true,
 })

@@ -4,17 +4,17 @@ import DoneItems from './DoneItems';
 import { Button, Input } from 'semantic-ui-react';
 import './TodoItems.css';
 import { connect} from 'react-redux';
-import { createTodo, deleteTodo, toggleTodo } from "./actions";
+import { createTodoSaga, deleteTodoSaga, toggleTodoSaga } from "./actions";
 import {currentBoard, todos} from './selectors';
 
-export function TodoList({todos, currentBoard, createTodo, deleteTodo, toggleTodo}) {
+export function TodoList({todos, currentBoard, createTodoSaga, deleteTodoSaga, toggleTodoSaga}) {
     const [todo,setTodo] = useState('');
 
     const itemListCompleted = todos.filter(item=>item.isCompleted);
     const itemListTodo = todos.filter(item=>!item.isCompleted);
 
     function handleDelete(key) {
-        deleteTodo(key)
+        deleteTodoSaga(key)
     }
 
     function handleTodoChange(e) {
@@ -22,14 +22,13 @@ export function TodoList({todos, currentBoard, createTodo, deleteTodo, toggleTod
     }
 
     function handleComplete(key) {
-        toggleTodo(key)
+        toggleTodoSaga(key)
     }
 
     function addItem(e) {
         console.log('submitted');
-        createTodo({
+        createTodoSaga({
             "text":todo,
-            "id":Date.now(),
             "isCompleted":false,
             "boardId":currentBoard
         });
@@ -69,9 +68,9 @@ function stateToProps(state){
 }
 
 const dispatchToProps = {
-    createTodo,
-    deleteTodo,
-    toggleTodo
+    createTodoSaga,
+    deleteTodoSaga,
+    toggleTodoSaga
 }
 
 export default connect(stateToProps, dispatchToProps)(TodoList)

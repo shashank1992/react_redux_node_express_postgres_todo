@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import {createReducer} from 'redux-orm';
 import {createStore, combineReducers, applyMiddleware} from 'redux';
+import createSagaMiddleware from 'redux-saga'
 import {Provider} from 'react-redux';
 import { createLogger } from 'redux-logger';
 import {orm} from './models';
@@ -11,14 +12,27 @@ import './index.css';
 import TodoApp from './TodoApp';
 import reportWebVitals from './reportWebVitals';
 import 'semantic-ui-css/semantic.min.css';
+import {createBoardSaga, deleteBoardSaga, createTodoSaga,
+   deleteTodoSaga,toggleTodoSaga, getBoardSaga, getTodoSaga } from './saga';
 
 const rootReducer = combineReducers({
   orm: createReducer(orm),
   selectedBoardId : selectedBoardReducer,
 })
 
-const createStoreWithMiddleware = applyMiddleware(createLogger())(createStore);
+const sagaMiddleware = createSagaMiddleware()
+
+const createStoreWithMiddleware = applyMiddleware(sagaMiddleware, createLogger())(createStore)
+
 const store = createStoreWithMiddleware(rootReducer, bootstrap());
+
+sagaMiddleware.run(createBoardSaga);
+sagaMiddleware.run(deleteBoardSaga);
+sagaMiddleware.run(createTodoSaga);
+sagaMiddleware.run(deleteTodoSaga);
+sagaMiddleware.run(toggleTodoSaga);
+sagaMiddleware.run(getBoardSaga);
+sagaMiddleware.run(getTodoSaga);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

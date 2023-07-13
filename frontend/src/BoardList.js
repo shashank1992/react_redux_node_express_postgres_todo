@@ -2,23 +2,22 @@ import {useState} from 'react';
 import BoardItem from './BoardItem';
 import {Form , Button, Modal, Menu} from 'semantic-ui-react';
 import { connect} from 'react-redux';
-import { createBoard, deleteBoard, selectBoard } from "./actions";
+import { createBoardSaga, deleteBoardSaga, selectBoard } from "./actions";
 import {currentBoard, boards} from './selectors';
 
-export function BoardList ({currentBoard, createBoard, selectBoard, deleteBoard, boards}) {
+export function BoardList ({currentBoard, createBoardSaga, selectBoard,  deleteBoardSaga, boards}) {
     const [name, setName] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleSubmit = (e) => {
-        createBoard({name});
+        createBoardSaga({name});
         setIsModalOpen(false);
         setName('');
         e.preventDefault();
     }
 
     const handleDelete = (key) => {
-        deleteBoard(key);
-        selectBoard(0);
+        deleteBoardSaga(key);
     }
 
     const handleBoardExpand = (key) => {
@@ -26,7 +25,7 @@ export function BoardList ({currentBoard, createBoard, selectBoard, deleteBoard,
     }
 
     return (
-        <Menu fluid>
+        <Menu fluid style={{overflowX:"auto"}}>
            {boards.length > 0 && <BoardItem entries={boards} 
            deleteBoard={handleDelete}
            boardExpand={handleBoardExpand}
@@ -49,7 +48,7 @@ export function BoardList ({currentBoard, createBoard, selectBoard, deleteBoard,
                 </Form>
             </Modal.Content>
            </Modal>
-        </Menu>    
+        </Menu>
     )
 }
 
@@ -61,8 +60,8 @@ function stateToProps(state) {
 }
 
 const dispatchToProps = {
-    createBoard,
-    deleteBoard,
+    createBoardSaga,
+    deleteBoardSaga,
     selectBoard
 }
 
