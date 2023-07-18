@@ -16,6 +16,8 @@ export class BoardModel extends Model {
                 BoardModel.withId(payload).todo.delete();
                 BoardModel.withId(payload).delete();
                 break;
+            default: 
+                break;
         }
     }
 }
@@ -40,6 +42,8 @@ export class TodoModel extends Model {
                 break;
             case DELETE_TODO:
                 TodoModel.withId(payload).delete();
+                break;
+            default: 
                 break;
         }
     }

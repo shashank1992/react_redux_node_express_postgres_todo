@@ -1,12 +1,11 @@
 import TodoList from "./TodoList";
 import BoardList from './BoardList';
 import {Grid, Container} from 'semantic-ui-react';
-import { connect} from 'react-redux';
 import { getBoardSaga, getTodoSaga } from "./actions";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
-export default function TodoApp({}) {
+export default function TodoApp() {
     const dispatch = useDispatch();
 
     useEffect(() => {

@@ -1,4 +1,4 @@
-import { call, put, take, takeEvery,takeLatest } from 'redux-saga/effects';
+import { call, put, takeEvery,takeLatest } from 'redux-saga/effects';
 import api from './api';
 
 import { createTodo,
@@ -18,7 +18,7 @@ import { CREATE_BOARD_SAGA,
 
 function* onBoardCreate(action) {
     try{
-        const {type, payload} = action
+        const {payload} = action
         const response = yield call(api.post,'/board',payload);
         yield put(createBoard(response.data));
         yield put(selectBoard(response.data.id));
@@ -60,7 +60,7 @@ function* onGetTodo(action){
 
 function* onTodoCreate(action) {
     try {
-        const {type, payload} = action
+        const {payload} = action
         const response = yield call(api.post,'/todo', payload);
         yield put(createTodo(response.data));
     } catch (e) {
@@ -71,7 +71,7 @@ function* onTodoCreate(action) {
 function* onTodoDelete(action) {
     try {
         const {payload} = action
-        const response = yield call(api.delete,`/todo/${payload}`);
+        yield call(api.delete,`/todo/${payload}`);
         yield put(deleteTodo(payload))
     } catch (e) {
         console.error('Error deleting item', e);
@@ -81,7 +81,7 @@ function* onTodoDelete(action) {
 function* onTodoToggle(action){
     try {
         const {payload} = action
-        const response = yield call(api.put,`/todo/${payload}`);
+        yield call(api.put,`/todo/${payload}`);
         yield put(toggleTodo(payload))
     } catch (e) {
         console.error('Error updating item', e);
